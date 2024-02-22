@@ -4,7 +4,7 @@ databaseChangeLog:
       author: denny.afrizal713@gmail.com
       changes:
         - createTable:
-            tableName: location
+            tableName: account
             columns:
               - column:
                   name: id
