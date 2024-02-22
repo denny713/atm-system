@@ -1,7 +1,7 @@
 server:
   port: ${APP_PORT:7979}
   servlet:
-    context-path: /hr
+    context-path: /atm
   compression:
     enabled: true
     min-response-size: 1024

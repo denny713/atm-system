@@ -1,12 +1,9 @@
 package com.bank.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -18,8 +15,9 @@ import java.time.LocalDateTime;
 @Table(name = "transaction")
 public class Transaction extends BaseEntity {
 
-    @Column(name = "account_number", length = 6)
-    private String accountNumber;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id", nullable = false, referencedColumnName = "id")
+    private Account account;
 
     @Column(name = "activity", length = 20)
     private String activity;

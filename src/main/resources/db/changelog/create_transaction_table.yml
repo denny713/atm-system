@@ -13,8 +13,8 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: account_number
-                  type: VARCHAR(6)
+                  name: account_id
+                  type: UUID
                   constraints:
                     nullable: false
               - column:
