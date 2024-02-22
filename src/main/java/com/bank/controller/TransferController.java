@@ -22,6 +22,6 @@ public class TransferController {
 
     @PostMapping
     public ResponseEntity<ResponseDto> transfer(@Valid @RequestBody TransferDto transferDto) {
-        return ResponseEntity.ok(transactionService.executeTransfer(transferDto));
+        return ResponseEntity.ok(new ResponseDto(transactionService.executeTransfer(transferDto)));
     }
 }

@@ -25,7 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ResponseDto executeTransfer(TransferDto dto) {
+    public Transaction executeTransfer(TransferDto dto) {
         Optional<Account> fromAccount = accountRepository.findByAccountNumber(dto.getFromAccountNo());
         if (fromAccount.isEmpty()) {
             throw new NotFoundException("From Account number Not Found");
@@ -50,6 +50,8 @@ public class TransactionServiceImpl implements TransactionService {
         trans.setActivity("Transfer");
         trans.setAmount(dto.getAmount());
 
-        return new ResponseDto(dto);
+        accountRepository.save(from);
+        accountRepository.save(to);
+        return transactionRepository.save(trans);
     }
 }
