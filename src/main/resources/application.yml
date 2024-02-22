@@ -13,9 +13,9 @@ spring:
   profiles:
     active: ${PROFILE:dev}
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST:127.0.0.1:5432}/${DATABASE_HR:postgres}
-    username: ${DATABASE_USER:root}
-    password: ${DATABASE_PASSWORD:root}
+    url: jdbc:postgresql://localhost:5432/atm
+    username: postgres
+    password: p@ssw0rd
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: ${HIKARI_POOL_SIZE:2}
