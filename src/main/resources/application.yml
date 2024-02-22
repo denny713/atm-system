@@ -1,0 +1,81 @@
+server:
+  port: ${APP_PORT:7979}
+  servlet:
+    context-path: /hr
+  compression:
+    enabled: true
+    min-response-size: 1024
+  forward-headers-strategy: framework
+
+spring:
+  banner:
+    location: classpath:banner.txt
+  profiles:
+    active: ${PROFILE:dev}
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:127.0.0.1:5432}/${DATABASE_HR:postgres}
+    username: ${DATABASE_USER:root}
+    password: ${DATABASE_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${HIKARI_POOL_SIZE:2}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    enabled: false
+    change-log: classpath:db/db.changelog.yaml
+  servlet:
+    multipart:
+      max-file-size: ${MAX_FILE_SIZE:10MB}
+      max-request-size: ${MAX_REQUEST_SIZE:10MB}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+application:
+  configuration:
+    cors-allowed-list:
+      - http://localhost:6555
+      - ${PORTAL_URL:http://localhost:8080}
+      - ${API_URL:http://localhost:9090}
+    public-api-list:
+      - /api/public/**
+
+feign:
+  httpclient:
+    disable-ssl-validation: true
+    enabled: false
+  okhttp:
+    enabled: true
+  client:
+    config:
+      auth-service-client:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+        host: ${AUTH_SERVICE_URL:http://localhost}/auth/v1/session/
+
+security-whitelist:
+  urls:
+    - /v1/auth/login
+    - /v2/api-docs
+    - /configuration/
+    - /swagger-resources/**
+    - /configuration/security
+    - /swagger-ui.html
+    - /webjars/**
+    - /swagger-ui/**
+    - /v3/api-docs/**
+    - /v1/code-tables
+    - /v1/code-types
+    - ${URL_WHITELIST:/v1/*}
+
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} %thread ${PID} [%X{correlationId}] %-5level %logger{36} - %class{1} - %msg%n"
